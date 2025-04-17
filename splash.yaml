@@ -1,0 +1,10 @@
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/logos/splash_screen.png
+
+  android_12:
+    color: "#FFFFFF"
+    color_dark: "#272727" # ✅ Correct key
+    image: assets/animation/screen_loading.json
+
+  web: true

@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "641966995573",
+    "project_id": "ecomnepal-24e39",
+    "storage_bucket": "ecomnepal-24e39.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:641966995573:android:99dd7e9c900580188fe03c",
+        "android_client_info": {
+          "package_name": "com.example.ecom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "641966995573-epkb0ubtnllrcs7d4la23o176j60jqru.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ecom",
+            "certificate_hash": "fb024601b8d0ff0ab58b873fd531e55e7a8a85fe"
+          }
+        },
+        {
+          "client_id": "641966995573-feo481bf32m8fm5tsgh7e18tjkdnn1k3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_-Ef1c2uaJzg2u5fTq62j3kbliZ86HRE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "641966995573-feo481bf32m8fm5tsgh7e18tjkdnn1k3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "641966995573-t8quou9915n0m165iaib0q4p4ctfjlco.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ecom"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
