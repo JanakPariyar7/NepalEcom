@@ -11,8 +11,6 @@ class JsigninWithGoogleandFacebook extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Google sign in button is building");
-
     final controller = Get.put(LoginController());
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -24,7 +22,6 @@ class JsigninWithGoogleandFacebook extends StatelessWidget {
           ),
           child: IconButton(
             onPressed: () {
-              print("Google Sign-In button clicked");
               controller.googleSignIn();
             },
             icon: Image.asset(JImagesPath.googleLogo, height: JSizes.iconMd),

@@ -1,4 +1,5 @@
 import 'package:ecom/common/reusable_widgets/reusable_button.dart';
+import 'package:ecom/features/authentication/controller/forgot_password.dart/forgot_password_controller.dart';
 import 'package:ecom/features/authentication/screens/login/login.dart';
 import 'package:ecom/utils/constants/image_strings.dart';
 import 'package:ecom/utils/constants/sizes.dart';
@@ -9,10 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
-  const ResetPasswordScreen({super.key});
+  const ResetPasswordScreen({super.key, required this.email});
+
+  final String email;
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ForgotPasswordController());
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -37,7 +41,7 @@ class ResetPasswordScreen extends StatelessWidget {
               //Forgot password text
               Text(
                 // JText.resetPassword,
-                'Reset Password Link Sent in Email',
+                'Reset Password Link Sent in Email\t$email',
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               SizedBox(height: JSizes.spaceBtwInputField),
@@ -75,14 +79,14 @@ class ResetPasswordScreen extends StatelessWidget {
               ReusableButton(
                 text: 'Done',
                 width: double.infinity,
-                onPressed: () {},
+                onPressed: () => Get.offAll(() => LoginScreen()),
               ),
               SizedBox(height: JSizes.spaceBtwInputField),
 
               //Resend Email TextButton
               ReusableButton(
                 text: 'Resend Email',
-                onPressed: () {},
+                onPressed: () => controller.resendPasswordResetEmail(),
                 buttonType: ButtonType.text,
               ),
             ],

@@ -167,4 +167,24 @@ class AuthenticationRepository extends GetxController {
       JsnackBar.errorSnackBAr(title: e, message: "Something went wrong");
     }
   }
+
+  //Forgot password
+
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } on JFirebaseException catch (e) {
+      throw JFirebaseException(e.code).message;
+    } on JFormatException catch (_) {
+      throw JFormatException();
+    } on JPlatformException catch (e) {
+      throw JFirebaseException(e.code).message;
+    }
+    //
+    //
+    //
+    catch (e) {
+      JsnackBar.errorSnackBAr(title: e, message: "Something went wrong");
+    }
+  }
 }

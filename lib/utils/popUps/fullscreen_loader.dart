@@ -10,7 +10,7 @@ class JFullScreenLoader {
           (_) => PopScope(
             canPop: false,
             child: Container(
-              color: Colors.grey,
+              color: Colors.transparent,
               width: double.infinity,
               height: double.infinity,
               child: Column(
