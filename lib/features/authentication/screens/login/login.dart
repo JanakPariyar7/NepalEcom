@@ -1,5 +1,6 @@
 import 'package:ecom/common/common_styles.dart';
 import 'package:ecom/features/authentication/screens/login/forgot_password_screen.dart';
+import 'package:ecom/features/authentication/screens/signUp/google_facebook_signin.dart';
 import 'package:ecom/features/authentication/screens/widgets/widgets.dart';
 import 'package:ecom/utils/constants/image_strings.dart';
 import 'package:ecom/utils/constants/sizes.dart';
@@ -30,11 +31,7 @@ class LoginScreen extends StatelessWidget {
               ),
 
               //Form
-              loginForm(
-                emailController: emailController,
-                passwordController: passwordController,
-                onPressed: () => Get.to(() => ForgotPasswordScreen()),
-              ),
+              loginForm(),
               //divider
               Row(
                 children: [
@@ -61,41 +58,7 @@ class LoginScreen extends StatelessWidget {
               SizedBox(height: JSizes.spacebtwnItems),
 
               //footer
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: Image(
-                        image: AssetImage(JImagesPath.googleLogo),
-                        height: JSizes.iconMd,
-                        width: JSizes.iconMd,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: JSizes.defaultSpace * 1.5),
-
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: Image(
-                        image: AssetImage(JImagesPath.facebookLogo),
-                        height: JSizes.iconLg,
-                        width: JSizes.iconLg,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              JsigninWithGoogleandFacebook(),
             ],
           ),
         ),

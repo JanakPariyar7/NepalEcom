@@ -74,7 +74,7 @@ class SignupController extends GetxController {
       );
 
       final userRepository = Get.put(UserRepository());
-      await userRepository.SaveUserRecord(newUser);
+      await userRepository.saveUserRecord(newUser);
 
       //show success message
       JsnackBar.successSnackBar(

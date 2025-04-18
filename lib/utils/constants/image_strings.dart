@@ -30,4 +30,8 @@ class JImagesPath {
   static String getShoeImage(int index) {
     return "assets/images/product_images/shoe$index.jpg";
   }
+  //amimation assets
+
+  static const String loadingAnimation =
+      "assets/animation/loading_animation.json";
 }

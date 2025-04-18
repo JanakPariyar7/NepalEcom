@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
@@ -66,7 +67,30 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
-  //email authentication sign in
+  //email authentication sign in (LOGIN)
+  Future<UserCredential> loginWithEmailAndPassword(
+    String email,
+    String password,
+  ) async {
+    try {
+      return await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on JFirebaseException catch (e) {
+      throw JFirebaseException(e.code).message;
+    } on JFormatException catch (_) {
+      throw JFormatException();
+    } on JPlatformException catch (e) {
+      throw JFirebaseException(e.code).message;
+    }
+    //
+    //
+    //
+    catch (e) {
+      throw "Something went Wrong";
+    }
+  }
 
   //email verification -via verification link
 
@@ -84,7 +108,7 @@ class AuthenticationRepository extends GetxController {
     //
     //
     catch (e) {
-      JsnackBar.errorSnackBAr(title: e, message: "So ething went wrong");
+      JsnackBar.errorSnackBAr(title: e, message: "Something went wrong");
     }
   }
 
@@ -105,7 +129,42 @@ class AuthenticationRepository extends GetxController {
     //
     //
     catch (e) {
-      JsnackBar.errorSnackBAr(title: e, message: "So ething went wrong");
+      JsnackBar.errorSnackBAr(title: e, message: "Something went wrong");
+    }
+  }
+
+  //Google SignIn options
+
+  Future<UserCredential?> signInWithGoogle() async {
+    try {
+      //trigger the authentication flow
+      final GoogleSignInAccount? userAcount = await GoogleSignIn().signIn();
+
+      //obtain the Auth request from the request
+
+      final GoogleSignInAuthentication? googleAuth =
+          await userAcount?.authentication;
+
+      //create new credential
+      final credentials = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      //Once Signed in return the credential
+      return await _auth.signInWithCredential(credentials);
+    } on JFirebaseException catch (e) {
+      throw JFirebaseException(e.code).message;
+    } on JFormatException catch (_) {
+      throw JFormatException();
+    } on JPlatformException catch (e) {
+      throw JFirebaseException(e.code).message;
+    }
+    //
+    //
+    //
+    catch (e) {
+      JsnackBar.errorSnackBAr(title: e, message: "Something went wrong");
     }
   }
 }

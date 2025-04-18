@@ -1,5 +1,7 @@
 import 'package:ecom/bottom_navigateionBar.dart';
+import 'package:ecom/features/authentication/controller/login/login_controller.dart';
 import 'package:ecom/features/authentication/controller/onboarding/onboarding_controller.dart';
+import 'package:ecom/features/authentication/screens/login/forgot_password_screen.dart';
 import 'package:ecom/features/authentication/screens/signUp/signup.dart';
 import 'package:ecom/features/shop/screens/category/category_screen.dart';
 import 'package:ecom/utils/constants/colors.dart';
@@ -7,6 +9,7 @@ import 'package:ecom/utils/constants/sizes.dart';
 import 'package:ecom/utils/constants/text_constants.dart';
 import 'package:ecom/utils/device/device_utility.dart';
 import 'package:ecom/utils/helpers/helpers.dart';
+import 'package:ecom/utils/helpers/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -155,28 +158,23 @@ class formHeader extends StatelessWidget {
 //loginForm with email and password
 
 class loginForm extends StatelessWidget {
-  const loginForm({
-    super.key,
-    required this.emailController,
-    required this.passwordController,
-    required this.onPressed,
-  });
-
-  final TextEditingController emailController;
-  final TextEditingController passwordController;
-  final VoidCallback onPressed;
+  const loginForm({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(LoginController());
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: JSizes.spaceBtwInputField),
       child: Form(
+        key: controller.loginKeyForm,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             //Email
             TextFormField(
-              controller: emailController,
+              controller: controller.email,
+              validator: (value) => JValidator.validateEmail(value),
               decoration: InputDecoration(
                 prefix: Icon(Iconsax.direct_right),
                 labelText: JText.email,
@@ -185,12 +183,26 @@ class loginForm extends StatelessWidget {
             SizedBox(height: JSizes.spaceBtwInputField),
 
             //Password
-            TextFormField(
-              controller: passwordController,
-              decoration: InputDecoration(
-                prefix: Icon(Iconsax.password_check),
-                labelText: JText.password,
-                suffix: Icon(Iconsax.eye),
+            Obx(
+              () => TextFormField(
+                controller: controller.password,
+                validator: (value) => JValidator.validatePassword(value),
+                obscureText: controller.hidePassword.value,
+
+                decoration: InputDecoration(
+                  labelText: JText.password,
+                  prefix: Icon(Iconsax.password_check),
+                  suffixIcon: IconButton(
+                    onPressed:
+                        () =>
+                            controller.hidePassword.value =
+                                !controller.hidePassword.value,
+                    icon:
+                        controller.hidePassword.value
+                            ? Icon(Iconsax.eye_slash)
+                            : Icon(Iconsax.eye),
+                  ),
+                ),
               ),
             ),
             SizedBox(height: JSizes.spaceBtwInputField / 2),
@@ -202,14 +214,23 @@ class loginForm extends StatelessWidget {
                 //remeber me
                 Row(
                   children: [
-                    Checkbox(value: true, onChanged: (value) {}),
+                    Obx(
+                      () => Checkbox(
+                        value: controller.rememberMe.value,
+                        onChanged:
+                            (value) =>
+                                controller.rememberMe.value =
+                                    !controller.rememberMe.value,
+                      ),
+                    ),
+
                     Text(JText.rememberMe),
                   ],
                 ),
 
                 //Forgot Password
                 TextButton(
-                  onPressed: onPressed,
+                  onPressed: () => Get.to(() => ForgotPasswordScreen()),
                   child: Text(JText.forgetPassword),
                 ),
               ],
@@ -219,7 +240,7 @@ class loginForm extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: OutlinedButton(
-                onPressed: () => Get.to(() => ButtomNavigationBarScreen()),
+                onPressed: () => controller.emailAndPasswordSignIn(),
                 child: Text(JText.signIn),
               ),
             ),

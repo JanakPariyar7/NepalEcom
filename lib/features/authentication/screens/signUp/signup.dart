@@ -1,5 +1,7 @@
 import 'package:ecom/common/reusable_widgets/reusable_input_fields_buttons.dart';
 import 'package:ecom/features/authentication/controller/signup/signup_controller.dart';
+import 'package:ecom/features/authentication/screens/signUp/google_facebook_signin.dart';
+import 'package:ecom/features/authentication/screens/signUp/privacy_policy.dart';
 import 'package:ecom/features/authentication/screens/signUp/verify_email.dart';
 import 'package:ecom/utils/constants/colors.dart';
 import 'package:ecom/utils/constants/image_strings.dart';
@@ -146,30 +148,7 @@ class SignupScreen extends StatelessWidget {
                     ),
                   ),
                   //Privacy and ToU
-                  Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(text: '${JText.agreeTo} '),
-                        TextSpan(
-                          text: JText.privacyPolicy,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline,
-                            color: dark ? JColors.white : JColors.black,
-                          ),
-                        ),
-                        TextSpan(text: ' and '),
-                        TextSpan(
-                          text: JText.termsOfUse,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            decoration: TextDecoration.underline,
-                            color: dark ? JColors.white : JColors.black,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  JprivacyPolicy(dark: dark),
                 ],
               ),
 
@@ -214,38 +193,7 @@ class SignupScreen extends StatelessWidget {
               SizedBox(height: JSizes.defaultSpace),
 
               //login with Options
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: JColors.grey),
-                      borderRadius: BorderRadius.circular(100.0),
-                    ),
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: Image.asset(
-                        JImagesPath.googleLogo,
-                        height: JSizes.iconMd,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: JSizes.defaultSpace * 1.5),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: JColors.grey),
-                      borderRadius: BorderRadius.circular(100.0),
-                    ),
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: Image.asset(
-                        JImagesPath.facebookLogo,
-                        height: JSizes.iconMd * 1.4,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              JsigninWithGoogleandFacebook(),
             ],
           ),
         ),

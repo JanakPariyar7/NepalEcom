@@ -1,6 +1,7 @@
 import 'package:ecom/common/reusable_widgets/reusable_button.dart';
 import 'package:ecom/common/widgets/layout/list_tile_view.dart';
 import 'package:ecom/common/widgets/layout/profile_section_heading.dart';
+import 'package:ecom/data/repositories/authentication/authentication_repository.dart';
 import 'package:ecom/features/personalized/screens/address/address.dart';
 import 'package:ecom/features/personalized/screens/settings/myorder.dart';
 import 'package:ecom/features/shop/screens/cart/cart_screen.dart';
@@ -119,7 +120,7 @@ class UserSettingScreen extends StatelessWidget {
                   ReusableButton(
                     text: 'LogOut',
                     textStyle: Theme.of(context).textTheme.labelMedium,
-                    onPressed: () {},
+                    onPressed: () => AuthenticationRepository.instance.logout(),
                     width: double.infinity,
                     backgroundColor: Colors.transparent,
                     buttonType: ButtonType.outlined,
