@@ -1,3 +1,4 @@
+import 'package:ecom/features/personalized/controllers/user_controller.dart';
 import 'package:ecom/features/personalized/screens/profile/profile_screen.dart';
 import 'package:ecom/features/shop/screens/home/home_widgets.dart';
 import 'package:ecom/features/shop/screens/widgets/appBar.dart';
@@ -12,6 +13,7 @@ class JprofileSectionHeading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = UserController.insatance;
     return JprimaryHeadingContainer(
       // height: JDeviceUtils.getScreenHeight(context) * 0.2,
       child: Column(
@@ -34,14 +36,16 @@ class JprofileSectionHeading extends StatelessWidget {
               circleWidth: 50,
               child: Icon(Iconsax.user),
             ),
-            title: Text(
-              'Janak Pariyar',
-              style: Theme.of(
-                context,
-              ).textTheme.headlineSmall!.apply(color: Colors.white),
+            title: Obx(
+              () => Text(
+                controller.user.value.firstName,
+                style: Theme.of(
+                  context,
+                ).textTheme.headlineSmall!.apply(color: Colors.white),
+              ),
             ),
             subtitle: Text(
-              'janakpariyar996@gmail.com',
+              controller.user.value.email,
               style: Theme.of(
                 context,
               ).textTheme.labelMedium!.apply(color: Colors.white),

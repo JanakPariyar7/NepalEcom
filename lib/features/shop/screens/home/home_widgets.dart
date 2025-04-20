@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecom/common/common_styles.dart';
 import 'package:ecom/common/reusable_widgets/reusbleContaianer.dart';
+import 'package:ecom/common/styles/shimmer_effect.dart';
+import 'package:ecom/features/personalized/controllers/user_controller.dart';
 import 'package:ecom/features/shop/controller/home_controller.dart';
 import 'package:ecom/features/shop/screens/widgets/appBar.dart';
 import 'package:ecom/features/shop/screens/widgets/widgets.dart';
@@ -42,6 +44,7 @@ class JhomePageAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(UserController());
     return JAppBar(
       showBackArrow: false,
       actions: [JCartCounterWidget(counter: 5)],
@@ -49,17 +52,22 @@ class JhomePageAppBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Ecom Nepal',
+            'Ecom Nepal, Welcome',
             style: Theme.of(
               context,
             ).textTheme.labelLarge!.apply(color: Colors.white),
           ),
-          Text(
-            'Shop Happily',
-            style: Theme.of(
-              context,
-            ).textTheme.headlineSmall!.apply(color: Colors.white),
-          ),
+          Obx(() {
+            if (controller.profileLoading.value) {
+              return JShimmerEffect(width: 80, height: 15);
+            }
+            return Text(
+              controller.user.value.fullName,
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall!.apply(color: Colors.white),
+            );
+          }),
         ],
       ),
     );

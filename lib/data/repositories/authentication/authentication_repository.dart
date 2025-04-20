@@ -1,9 +1,11 @@
 import 'package:ecom/bottom_navigateionBar.dart';
 import 'package:ecom/common/reusable_widgets/snackbar.dart';
+import 'package:ecom/data/repositories/user/user_repository.dart';
 import 'package:ecom/features/authentication/screens/login/login.dart';
 import 'package:ecom/features/authentication/screens/onboarding_screen.dart';
 import 'package:ecom/features/authentication/screens/signUp/verify_email.dart';
 import 'package:ecom/utils/helpers/exceptions.dart';
+import 'package:ecom/utils/popUps/fullscreen_loader.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
@@ -17,6 +19,8 @@ class AuthenticationRepository extends GetxController {
   final deviceStorage = GetStorage();
 
   final _auth = FirebaseAuth.instance;
+
+  User? get authUser => _auth.currentUser;
 
   //Called form main.dart when the app launch
   @override
@@ -185,6 +189,61 @@ class AuthenticationRepository extends GetxController {
     //
     catch (e) {
       JsnackBar.errorSnackBAr(title: e, message: "Something went wrong");
+    }
+  }
+
+  //delete account
+  Future<void> deleteAccount() async {
+    try {
+      await UserRepository.instance.removeUserRecord(_auth.currentUser!.uid);
+      await _auth.currentUser?.delete();
+    } on JFirebaseException catch (e) {
+      throw JFirebaseException(e.code).message;
+    } on JFormatException catch (_) {
+      throw JFormatException();
+    } on JPlatformException catch (e) {
+      throw JFirebaseException(e.code).message;
+    }
+    //
+    //
+    //
+    catch (e) {
+      JsnackBar.errorSnackBAr(
+        title: e,
+        message: "Something went wrong. Try Again",
+      );
+    }
+  }
+
+  //reAuthenticate User
+  Future<void> reAuthenticateWithEmailAndPassword(
+    String email,
+    String password,
+  ) async {
+    try {
+      AuthCredential credential = EmailAuthProvider.credential(
+        email: email,
+        password: password,
+      );
+      //reauthenticate
+      await _auth.currentUser!.reauthenticateWithCredential(credential);
+
+      JFullScreenLoader.stopLoadingDialog();
+    } on JFirebaseException catch (e) {
+      throw JFirebaseException(e.code).message;
+    } on JFormatException catch (_) {
+      throw JFormatException();
+    } on JPlatformException catch (e) {
+      throw JFirebaseException(e.code).message;
+    }
+    //
+    //
+    //
+    catch (e) {
+      JsnackBar.errorSnackBAr(
+        title: e,
+        message: "Something went wrong. Try Again",
+      );
     }
   }
 }
